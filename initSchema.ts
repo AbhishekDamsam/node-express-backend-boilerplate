@@ -27,6 +27,13 @@ async function createSchema() {
       console.log('Executed query:', query) // eslint-disable-line no-console
     }
 
+    const text = `
+    INSERT INTO ASSET(NAME, DESCRIPTION, FILE_TYPE, CREATED_ON, ISACTIVE)
+    VALUES($1, $2, $3, $4, $5) RETURNING *
+    `
+    const values = ["New asset", "Test description", 1, new Date().toISOString(), 1];
+    await client.query(text, values);
+
     console.log('Schema creation completed successfully!') // eslint-disable-line no-console
   } catch (error) {
     console.error('Error creating schema:', error) // eslint-disable-line no-console
